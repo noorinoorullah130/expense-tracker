@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 
-const AddBudget = () => {
-    const [budget, setBudget] = useState("");
+const AddBudget = ({ setBudget }) => {
+    const [budgetInput, setBudgetInput] = useState("");
 
     const handleChange = (e) => {
-        setBudget(e.target.value);
+        setBudgetInput(e.target.value);
+    };
+
+    const AddBudget = () => {
+        const newBudget = Number(budgetInput);
+
+        localStorage.setItem("budget", JSON.stringify(newBudget));
+
+        setBudget(newBudget);
+
+        setBudgetInput("");
+
+        console.log(budgetInput);
     };
 
     return (
@@ -13,13 +25,13 @@ const AddBudget = () => {
             <label htmlFor="budget">Budget:</label>
             <input
                 type="number"
-                value={budget}
+                value={budgetInput}
                 onChange={handleChange}
                 id="budget"
                 placeholder="Enter you budget"
                 min={0}
             />
-            <button>Add Budget</button>
+            <button onClick={AddBudget}>Add Budget</button>
         </div>
     );
 };

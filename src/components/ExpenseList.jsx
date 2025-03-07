@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const ExpenseList = () => {
+const ExpenseList = ({ budget, allExpenses, setAllExpenses }) => {
+    const [totalExpense, setTotalExpense] = useState(0);
+    const [budgetLeft, setBudgetLeft] = useState(0);
+
+    useEffect(() => {
+        const totalAmount = allExpenses.reduce(
+            (sum, expenses) => sum + expenses.amount,
+            0
+        );
+
+        setTotalExpense(totalAmount);
+
+        setBudgetLeft(budget - totalAmount);
+    }, [budget, allExpenses]);
+
+    const handleRemoveExpense = (index) => {
+        const updatedExpenses = allExpenses.filter((_, i) => index !== i);
+        localStorage.setItem("allExpenses", JSON.stringify(updatedExpenses));
+        setAllExpenses(updatedExpenses);
+    };
+
     return (
         <div className="expense-list">
             <div className="budget-detail">
-                <h3>Total Budget: 10,000</h3>
-                <h3>Total Expense: 10,000</h3>
-                <h3>Budget Left: 10,000</h3>
+                <h3>Total Budget: {budget}</h3>
+                <h3>Total Expense: {totalExpense}</h3>
+                <h3>Budget Left: {budgetLeft}</h3>
             </div>
 
             <h2 className="expense-history">Expense History:</h2>
@@ -19,14 +39,21 @@ const ExpenseList = () => {
             </div>
 
             <div className="list-container">
-                <div className="list">
-                    <h3 style={{ width: "30%" }}>1</h3>
-                    <h3>Grocerys</h3>
-                    <h3>1,000</h3>
-                    <h3>
-                        <button className="remove-btn">Remove</button>
-                    </h3>
-                </div>
+                {allExpenses.map((expense, i) => (
+                    <div className="list" key={i}>
+                        <h3 style={{ width: "30%" }}>{i + 1}</h3>
+                        <h3>{expense.expenseTitle}</h3>
+                        <h3>{expense.amount}</h3>
+                        <h3>
+                            <button
+                                className="remove-btn"
+                                onClick={() => handleRemoveExpense(i)}
+                            >
+                                Remove
+                            </button>
+                        </h3>
+                    </div>
+                ))}
             </div>
         </div>
     );
