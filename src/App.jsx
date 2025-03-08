@@ -9,7 +9,8 @@ function App() {
 
     useEffect(() => {
         const storedBudget = JSON.parse(localStorage.getItem("budget")) || 0;
-        const storedExpenses = JSON.parse(localStorage.getItem("allExpenses")) || [];
+        const storedExpenses =
+            JSON.parse(localStorage.getItem("allExpenses")) || [];
         setBudget(storedBudget);
         setAllExpenses(storedExpenses);
     }, []);
@@ -23,7 +24,11 @@ function App() {
                     <AddExpense setAllExpenses={setAllExpenses} />
                 </div>
                 <div className="right-side">
-                    <ExpenseList budget={budget} allExpenses={allExpenses} setAllExpenses={setAllExpenses} />
+                    <ExpenseList
+                        budget={budget}
+                        allExpenses={allExpenses}
+                        setAllExpenses={setAllExpenses}
+                    />
                 </div>
             </div>
         </>

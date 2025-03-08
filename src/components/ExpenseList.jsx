@@ -24,9 +24,9 @@ const ExpenseList = ({ budget, allExpenses, setAllExpenses }) => {
     return (
         <div className="expense-list">
             <div className="budget-detail">
-                <h3>Total Budget: {budget}</h3>
-                <h3>Total Expense: {totalExpense}</h3>
-                <h3>Budget Left: {budgetLeft}</h3>
+                <h3>Total Budget: {budget.toLocaleString()}</h3>
+                <h3>Total Expense: {totalExpense.toLocaleString()}</h3>
+                <h3>Budget Left: {budgetLeft.toLocaleString()}</h3>
             </div>
 
             <h2 className="expense-history">Expense History:</h2>
@@ -43,7 +43,7 @@ const ExpenseList = ({ budget, allExpenses, setAllExpenses }) => {
                     <div className="list" key={i}>
                         <h3 style={{ width: "30%" }}>{i + 1}</h3>
                         <h3>{expense.expenseTitle}</h3>
-                        <h3>{expense.amount}</h3>
+                        <h3>{(expense.amount).toLocaleString()}</h3>
                         <h3>
                             <button
                                 className="remove-btn"
